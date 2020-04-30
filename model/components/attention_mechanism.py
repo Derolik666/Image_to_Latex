@@ -82,7 +82,7 @@ class AttentionMechanism(object):
             att_flat = tf.reshape(att, shape=[-1, self._dim_e])
 
             # NEW ADDED
-            W_s = tf.get_variable("W_s", shape=[self._dim_e, self._dim_e],
+            W_s = tf.get_variable("Ws", shape=[self._dim_e, self._dim_e],
                                   dtype=tf.float32)
             e_s = tf.matmul(tf.tanh(tf.matmul(s, W_s) + att_h), att_beta)
             e_s = tf.reshape(e_s, shape=[-1, 1])
