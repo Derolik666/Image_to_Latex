@@ -72,9 +72,9 @@ class AttentionCell(RNNCell):
             new_h = tf.nn.dropout(new_h, self._dropout)
 
             # compute NEW visual sentinel
-            s_W_x = tf.get_variable("o_W_c", dtype=tf.float32,
+            s_W_x = tf.get_variable("s_W_c", dtype=tf.float32,
                                     shape=(self._dim_o+self._dim_embeddings, self._dim_o))
-            s_W_h = tf.get_variable("o_W_h", dtype=tf.float32,
+            s_W_h = tf.get_variable("s_W_h", dtype=tf.float32,
                                     shape=(self._num_units, self._dim_o))
 
             g = tf.sigmoid(tf.matmul(x, s_W_x)+tf.matmul(new_h, s_W_h))
