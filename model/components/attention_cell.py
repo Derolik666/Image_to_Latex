@@ -79,7 +79,7 @@ class AttentionCell(RNNCell):
 
             g = tf.sigmoid(tf.matmul(x, s_W_x)+tf.matmul(new_h, s_W_h))
             s = tf.multiply(g, tf.tanh(new_cell_state))
-
+            print(s.shape)
             # compute attention
             c = self._attention_mechanism.context(new_h, s)
 
