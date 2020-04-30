@@ -73,7 +73,7 @@ class AttentionCell(RNNCell):
 
             # compute NEW visual sentinel
             s_W_x = tf.get_variable("o_W_c", dtype=tf.float32,
-                                    shape=(self._n_channels, self._dim_o))
+                                    shape=(self._dim_o+self._dim_embeddings, self._dim_o))
             s_W_h = tf.get_variable("o_W_h", dtype=tf.float32,
                                     shape=(self._num_units, self._dim_o))
 
