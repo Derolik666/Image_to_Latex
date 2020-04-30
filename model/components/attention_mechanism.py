@@ -35,7 +35,7 @@ class AttentionMechanism(object):
         self._dim_e = dim_e
         self._tiles = tiles
         self._scope_name = "att_mechanism"
-
+        # img [batch_size, H*W, 1024]  [512, 512] att_img [batch_size, H*W, 512]
         # attention vector over the image
         self._att_img = tf.layers.dense(
             inputs=self._img,
@@ -66,40 +66,61 @@ class AttentionMechanism(object):
             else:
                 att_img = self._att_img
                 img = self._img
+            # s [batch_size, 1024] att_s [batch_size, 512]
+            att_s = tf.layers.dense(
+                inputs=s, units=self._dim_e, use_bias=False)
+            att_s = tf.expand_dims(att_s, axis=1)
+            # att_img [batch_size, H*W+1, 512]
+            att_concat = tf.concat([att_img, att_s], axis=1)
 
+            # h [batch_size, 512] [512, 512] [batch_size, 512]
             # computes attention over the hidden vector
             att_h = tf.layers.dense(
                 inputs=h, units=self._dim_e, use_bias=False)
 
             # sums the two contributions
             att_h = tf.expand_dims(att_h, axis=1)
-            att = tf.tanh(att_img + att_h)
+            # att [batch_size, H*W+1, 512]
+            att = tf.tanh(att_concat + att_h)
 
             # computes scalar product with beta vector
             # works faster with a matmul than with a * and a tf.reduce_sum
             att_beta = tf.get_variable("att_beta", shape=[self._dim_e, 1],
                                        dtype=tf.float32)
+            # att_flat [batch*(H*W+1), 512]
             att_flat = tf.reshape(att, shape=[-1, self._dim_e])
-
-            # NEW ADDED
-            W_s = tf.get_variable("Ws", shape=[self._dim_e, self._dim_e],
-                                  dtype=tf.float32)
-            e_s = tf.matmul(tf.tanh(tf.matmul(s, W_s) + att_h), att_beta)
-            e_s = tf.reshape(e_s, shape=[-1, 1])
-
-            # compute e
-            e = tf.matmul(att_flat, att_beta)
-            e = tf.reshape(e, shape=[-1, self._n_regions])
-            e = tf.concat([e, e_s], axis=1)
+            # z_hat [batch*(H*W+1), 1]
+            z_hat = tf.matmul(att_flat, att_beta)
+            # z_hat [batch, H*W+1]
+            z_hat = tf.reshape(z_hat, shape=[-1, self._n_regions + 1])
+            # alpha_split1 [batch, H*W] alpha_split2 [batch, 1]
+            alpha_split1, alpha_split2 = tf.split(
+                z_hat, [self._n_regions, 1], axis=1)
 
             # compute weights
-            a = tf.nn.softmax(e)
-            beta = tf.expand_dims(a[:, -1], axis=1)
-            a = a[:, :-1]
-            a = tf.expand_dims(a, axis=-1)
-            c = tf.reduce_sum(a * img, axis=1)
+            alpha = tf.nn.softmax(alpha_split1)
+            # alpha [batch, H*W, 1]
+            alpha = tf.expand_dims(alpha, axis=-1)
+            # c [batch, 1024]
+            c = tf.reduce_sum(alpha * img, axis=1)
 
-            return c, beta
+            # compute weights
+            alpha_hat = tf.nn.softmax(z_hat)
+            # beta_split1 [batch, H*W] beta_split2 [batch, 1]
+            beta_split1, beta_split2 = tf.split(
+                alpha_hat, [self._n_regions, 1], axis=1)
+            # beta_split2 [batch, 1]  s [batch_size, 1024] beta_s [batch_size, 1024]
+            beta_s = beta_split2 * s
+            # one_vector [batch, 1]
+            one_vector = tf.ones([tf.shape(att_img)[0], 1], tf.float32)
+            # oppo_beta [batch, 1]
+            oppo_beta = one_vector - beta_split2
+            # oppo_beta [batch, 1] c [batch, 1024] oppo_beta_c [batch, 1024]
+            oppo_beta_c = oppo_beta * c
+            # beta_s [batch_size, 1024] oppo_beta_c [batch, 1024] c_hat[batch_size, 1024]
+            c_hat = beta_s + oppo_beta_c
+
+            return c_hat
 
     def initial_cell_state(self, cell):
         """Returns initial state of a cell computed from the image

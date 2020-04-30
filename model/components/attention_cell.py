@@ -81,15 +81,13 @@ class AttentionCell(RNNCell):
             s = tf.multiply(g, tf.tanh(new_cell_state))
 
             # compute attention
-            c, beta = self._attention_mechanism.context(new_h, s)
+            c = self._attention_mechanism.context(new_h, s)
 
             # compute o
             o_W_c = tf.get_variable("o_W_c", dtype=tf.float32,
                                     shape=(self._num_units, self._dim_o))
             o_W_h = tf.get_variable("o_W_h", dtype=tf.float32,
                                     shape=(self._num_units, self._dim_o))
-
-            c = tf.multiply(beta, s)+tf.multiply(1-beta, c)
 
             new_o = tf.tanh(tf.matmul(new_h, o_W_h) + tf.matmul(c, o_W_c))
             new_o = tf.nn.dropout(new_o, self._dropout)
