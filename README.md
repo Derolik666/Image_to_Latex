@@ -1,4 +1,4 @@
-# Im2Latex
+# Translating Image to LaTeX with Adaptive Attention
 
 ## Project Goal
 
