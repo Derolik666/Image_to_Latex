@@ -1,5 +1,17 @@
 # Im2Latex
 
+## Project Goal
+
+LaTeX has become the most popular typesetting system in both scientific and industrial fields with its ability to generate
+beautiful mathematical equations. However, once an equation is rendered, the output cannot be modified without
+access to the underlying code, and it is very time consuming and error-prone for someone to re-type lengthy equations
+by just looking at the image. To improve working efficiency, our team believes that it is worth studying to translate
+mathematical equations directly from image to LaTeX code. As a sub-problem under image captioning, we decided to solve the problem with an encoder-decoder model
+framework, started with the model structure proposed by (https://guillaumegenthial.github.io/image-to-latex.html), and implemented adaptive attention mechanism
+as our new approach. Thus, our model consists of a Convolutional Neural Network (CNN) encoder, a Long Short Term Memory (LSTM) decoder with adaptive attention
+which knows for each time step whether it is worth looking at the image. Our model significantly outperformed the existing models with a BLEU score of 88% (13% increase)and
+an image edit distance of 78% (25% increase).
+
 Seq2Seq model with Attention + Beam Search for Image to LaTeX, similar to [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) and [Harvard's paper and dataset](http://lstm.seas.harvard.edu/latex/).
 
 Check the [blog post](https://guillaumegenthial.github.io/image-to-latex.html).
