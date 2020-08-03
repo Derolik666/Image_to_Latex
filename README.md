@@ -1,5 +1,7 @@
 # Translating Image to LaTeX with Adaptive Attention
 
+[Project Report](https://github.com/Derolik666/Image_to_Latex/blob/master/Results/Project_Report.pdf) can be accessed here.
+
 ## Problem Statement 
 
 * LaTeX has become the most popular typesetting system in both scientific and industrial fields with its ability to generate
@@ -42,8 +44,6 @@ framework, started with the model structure proposed by [Genthial](https://guill
 as our new approach. Thus, our model consists of a Convolutional Neural Network (CNN) encoder, a Long Short Term Memory (LSTM) decoder with adaptive attention
 which knows for each time step whether it is worth looking at the image. Our model significantly outperformed the existing models with a BLEU score of 88% (13% increase)and
 an image edit distance of 78% (25% increase).
-
-[Project Report](https://github.com/Derolik666/Image_to_Latex/blob/master/Results/Project_Report.pdf) can be accessed here.
 
 ## Install
 
