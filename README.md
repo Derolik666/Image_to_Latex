@@ -13,7 +13,23 @@ by just looking at the image.
 * Based on [Genthial](https://guillaumegenthial.github.io/image-to-latex.html) and [Deng](http://lstm.seas.harvard.edu/latex/), our team implemented adaptive attention purposed by [Xu](https://github.com/jiasenlu/AdaptiveAttention) to further improve the network performance
 
 ## Results
+*The training and validation perplexities of our model
 
+![Screenshot](Results/perplexities.png)
+
+*Model Performance
+
+| Decoder      | EM(I)    | BLEU                 |ED (T)             |ED (I)         |
+| -------------|----------| ---------------------|-------------------|---------------|
+| [CNNEnc](http://lstm.seas.harvard.edu/latex/)|  0.53   | 0.75               | NR             | 0.61         | 
+| [Greedy](https://guillaumegenthial.github.io/image-to-latex.html)         |  0.22   | 0.76                | 0.76             | 0.35         |
+| [Beam](https://guillaumegenthial.github.io/image-to-latex.html)  |  0.32   | 0.78                | 0.76             | 0.62         |
+| Our model       | **0.55**|**0.88**             |**0.91**          |**0.78**      |
+
+**Result comparison of our model to the two models purposed
+in [5] (One with beam search the other with greedy search).
+EM stands for exact match, ED means edit distance, T and I are
+text based and image based**
 
 ## Abstract 
 
@@ -27,7 +43,7 @@ as our new approach. Thus, our model consists of a Convolutional Neural Network 
 which knows for each time step whether it is worth looking at the image. Our model significantly outperformed the existing models with a BLEU score of 88% (13% increase)and
 an image edit distance of 78% (25% increase).
 
-Full report can be accessed in Project_Report.pdf
+[Project Report]() can be accessed here.
 
 ## Install
 
