@@ -26,10 +26,10 @@ by just looking at the image.
 | [Beam](https://guillaumegenthial.github.io/image-to-latex.html)  |  0.32   | 0.78                | 0.76             | 0.62         |
 | Our model       | **0.55**|**0.88**             |**0.91**          |**0.78**      |
 
-**Result comparison of our model to the two models purposed
-in [5] (One with beam search the other with greedy search).
-EM stands for exact match, ED means edit distance, T and I are
-text based and image based**
+Result comparison of our model to the two models purposed
+by [Deng](http://lstm.seas.harvard.edu/latex/) and [Genthial](https://guillaumegenthial.github.io/image-to-latex.html) (One with beam search the other with greedy search).
+**EM** stands for exact match, **ED** means edit distance, **T** and **I** are
+text based and image based.
 
 ## Abstract 
 
