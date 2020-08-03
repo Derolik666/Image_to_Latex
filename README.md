@@ -1,6 +1,21 @@
 # Translating Image to LaTeX with Adaptive Attention
 
-## Project Goal
+## Problem Statement 
+
+* LaTeX has become the most popular typesetting system in both scientific and industrial fields with its ability to generate
+beautiful mathematical equations
+* However, once an equation is rendered, the output cannot be modified without
+access to the underlying code, and it is very time consuming and error-prone for someone to re-type lengthy equations
+by just looking at the image.
+
+## Solution
+
+* Based on [Genthial](https://guillaumegenthial.github.io/image-to-latex.html) and [Deng](http://lstm.seas.harvard.edu/latex/), our team implemented adaptive attention purposed by [Xu](https://github.com/jiasenlu/AdaptiveAttention) to further improve the network performance
+
+## Results
+
+
+## Abstract 
 
 LaTeX has become the most popular typesetting system in both scientific and industrial fields with its ability to generate
 beautiful mathematical equations. However, once an equation is rendered, the output cannot be modified without
