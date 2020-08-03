@@ -13,11 +13,11 @@ by just looking at the image.
 * Based on [Genthial](https://guillaumegenthial.github.io/image-to-latex.html) and [Deng](http://lstm.seas.harvard.edu/latex/), our team implemented adaptive attention purposed by [Xu](https://github.com/jiasenlu/AdaptiveAttention) to further improve the network performance
 
 ## Results
-*The training and validation perplexities of our model
+* The training and validation perplexities of our model
 
 ![Screenshot](Results/perplexities.png)
 
-*Model Performance
+* Model Performance
 
 | Decoder      | EM(I)    | BLEU                 |ED (T)             |ED (I)         |
 | -------------|----------| ---------------------|-------------------|---------------|
@@ -43,7 +43,7 @@ as our new approach. Thus, our model consists of a Convolutional Neural Network 
 which knows for each time step whether it is worth looking at the image. Our model significantly outperformed the existing models with a BLEU score of 88% (13% increase)and
 an image edit distance of 78% (25% increase).
 
-[Project Report]() can be accessed here.
+[Project Report](https://github.com/Derolik666/Image_to_Latex/blob/master/Results/Project_Report.pdf) can be accessed here.
 
 ## Install
 
